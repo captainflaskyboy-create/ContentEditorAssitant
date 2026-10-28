@@ -1,0 +1,20 @@
+> NOTE FOR AI: This document is a structured reference sheet outlining key video editing, camera movement, and UI highlight techniques. Use these technical definitions, parameters, and workflows to generate precise video editing steps, automated keyframe configurations, or scripting instructions.
+
+# VIDEO EDITING & UI ZOOM TECHNIQUES CHEAT SHEET
+
+## 1. CAMERA MOVEMENT & FRAMING
+- Ken Burns Effect: Keyframed Scale + Position over time for slow, gradual panning/zooming on static graphics or UI.
+- Anchor Point Targeting: Move pivot/anchor point directly over target UI element (button/text) before scaling to prevent off-screen drifting.
+- Keyframe Easing (Ease In/Out): Apply Bezier/quadratic velocity curves to keyframes to eliminate mechanical starts/stops.
+- Dynamic Snap Zoom: Instantaneous scale shift (e.g., +15%) without animated keyframes for emphasis or hiding jump cuts.
+
+## 2. UI & DEMO HIGHLIGHTING
+- Cursor-Follow Auto-Zoom: Keyframe Position X/Y tied to mouse movement to track active cursor interaction.
+- Spotlight Mask & Dimming: Invert crop mask over target area and lower surrounding layer opacity/brightness.
+- Selective Blur: Apply mild Gaussian Blur to non-essential UI panels (sidebars, toolbars) to lock visual hierarchy.
+- Layer Elevation: Duplicate target UI element, crop to mask, apply drop shadow, and elevate layer order.
+
+## 3. TRANSITIONS & MOTION
+- Whip Zoom / Whip Pan: Rapid keyframed zoom-in on Clip A matched with rapid zoom-out on Clip B + directional motion blur.
+- Match Cut Zoom: Seamless cut between two shots sharing an identical central focus point or subject geometry.
+- Motion Tracking Focus: Lock target position coordinates to subject transform data while dynamic scaling occurs.

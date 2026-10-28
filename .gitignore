@@ -1,0 +1,6 @@
+/target/
+/.tools/
+/dist/
+/test-output/
+/video-clips-for-testing/
+*.partial.mp4

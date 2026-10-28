@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "source": "../video-clips-for-testing/pngtuber_speedrun.mkv",
+  "output": "../test-output/basic-test/basic-cut.mp4",
+  "range": {"start": 880, "duration": 10},
+  "effects": []
+}

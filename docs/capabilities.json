@@ -1,0 +1,78 @@
+{
+  "ok":true,"name":"AIContentEditorAssistant","version":"0.2.1","request_version":2,
+  "platform":"Windows 10 22H2 / Windows 11 x64, with Windows Media Foundation; one standalone executable",
+  "external_dependencies":[],
+  "workflow":[
+    "The calling AI makes editorial decisions. ACEA does not understand a natural-language creative prompt.",
+    "Run doctor, inspect the source, then review it with timestamped contact sheets. Open the generated images with your image tools.",
+    "Inspect key moments more closely using frames or a narrower review range. Confirm the instructional stages and payoff from the footage.",
+    "Choose the shortest satisfying edit; a requested maximum duration is a ceiling, not a target to fill.",
+    "Write a version 2 job with stable clip IDs in story order, source ranges, labels, and precise effects. Validate the entire job before rendering.",
+    "Run batch, inspect output frames, and return the ordered clips plus manifest. Use batch --resume true to recover or revise.",
+    "Do not claim CapCut was edited or import-tested. ACEA generates clips for later assembly; it does not create a finished tutorial or narration."
+  ],
+  "commands":{
+    "doctor":"acea doctor: report native graphics and registered H.264/AAC encoders; this is a capability inventory, not proof of active acceleration",
+    "capabilities":"acea capabilities: this embedded interface and workflow reference",
+    "inspect":"acea inspect --source <video>: dimensions, duration, frame rate, audio streams, and rotation",
+    "frames":"acea frames --source <video> --output-dir <fresh-directory> --times <0,5,10> [--height <540>]: 1..12 PNGs, including requested and actual source timestamps; height 2..1080 without upscaling",
+    "review":"acea review --source <video> --output-dir <fresh-directory> [--start <0>] [--duration <seconds>] [--interval <15>]: timestamped contact sheets plus index.json; at most 240 frames, continuation_timestamp when more remain",
+    "validate":"acea validate --request <clip-or-job.json|->: validate all ranges, effects, source decoder negotiation, and job duration budget without rendering",
+    "render":"acea render --request <clip.json|->: one edited source range",
+    "batch":"acea batch --request <job.json|-> [--resume <false|true>]: serial ordered clip rendering, checkpoints, and manifest.json",
+    "install":"acea install [--replace <false|true>] [--dry-run <false|true>]: explicit per-user installation and user PATH update; open a new terminal afterward"
+  },
+  "clip_request":{
+    "required":["version","source","output","range"],"version":2,
+    "source":"Local video path. Relative paths resolve against the request file directory, or cwd for stdin.",
+    "output":".mp4 path in an existing directory; must differ from source",
+    "range":{"start":"Source-relative seconds >=0","duration":"Positive seconds; must fit source and contain at least one frame"},
+    "effects":{"default":[],"maximum":32},"settings":"See settings below","overwrite":{"default":false}
+  },
+  "job_request":{
+    "required":["version","source","output_dir","clips"],"version":2,
+    "source":"One source recording for this job",
+    "output_dir":"Fresh directory created by batch, with existing parent; resume requires its version 2 manifest",
+    "max_duration":"Optional positive seconds. Validation reserves up to one AAC packet per clip for audio encoder padding; final manifest uses actual container durations.",
+    "settings":"Shared settings; an optional clip.settings object replaces these settings for that clip",
+    "clips":"1..1000 ordered objects: {id,label?,range,effects?,settings?}. IDs: 1..64 ASCII letters/digits/-/_, unique ignoring case, excluding Windows device names. Each output is <id>.mp4.",
+    "resume":"Completed output is reused only when source SHA-256, effective request, renderer version, output SHA-256, and media verification match. Reorder/relabel without re-encoding. Unmanaged output files are protected."
+  },
+  "settings":{
+    "video_bitrate_kbps":{"default":"10000 at 1920x1080/30fps, proportional to resolution and fps, clamped to 2000..40000","override_range":[100,100000]},
+    "acceleration":{"default":"auto","values":["auto","software"],"description":"Auto prefers native GPU paths; software forces WARP rendering and software codecs. Results report actual paths and fallback reasons."},
+    "preview_height":{"default":null,"description":"Optional even height, 144..source height; preserve aspect ratio and round output to even dimensions"},
+    "threads":{"default":2,"minimum":1,"maximum":16,"description":"Compatibility work-limit hint. Application rendering is serial; Windows components own their codec thread pools."}
+  },
+  "coordinates":{
+    "target":"{x,y}, each 0..1, default {x:0.5,y:0.5}; desired viewport center, clamped at edges",
+    "rect":"{x,y,width,height} normalized to the full displayed source frame, before camera movement; inside image and at least 2 source pixels",
+    "review_cells":"Contact sheets include labels. Normalize within each cell's image_rect only, excluding the label and other cells.",
+    "zoom":"1 shows the full frame; 2 shows half the source width and height"
+  },
+  "timing":{
+    "effects":"Seconds relative to range.start. Half-open [start,end) intervals. Outside a camera interval, the image returns to full frame.",
+    "sampling":"Source-relative seconds; actual_source_time is the decoded frame timestamp, which can differ by up to a frame from the request.",
+    "overlap":"Camera intervals cannot overlap. Highlights run in request order before the camera. Use a single camera path for a continuous zoom/hold/return.",
+    "output":"Constant source metadata frame rate, supported up to 120 fps; range duration rounds down to complete frames. AAC padding may add up to approximately 22ms to container duration."
+  },
+  "easing":{"values":["linear","ease_in","ease_out","ease_in_out"],"default":"ease_in_out","curves":"Quadratic; a keyframe's easing applies to its outgoing segment"},
+  "effects":[
+    {"type":"zoom","required":["start","end"],"optional":{"target":{"x":0.5,"y":0.5},"from_zoom":1,"to_zoom":1.5,"easing":"ease_in_out"}},
+    {"type":"snap_zoom","required":["start","end"],"optional":{"target":{"x":0.5,"y":0.5},"zoom":1.5}},
+    {"type":"pan","required":["start","end","from","to"],"description":"from/to are target points","optional":{"zoom":1.5,"easing":"ease_in_out"}},
+    {"type":"ken_burns","required":["start","end","from","to"],"description":"from/to are {zoom,target?} camera states","optional":{"easing":"ease_in_out"}},
+    {"type":"camera","required":["keyframes"],"description":"2..32 strictly ordered {time,zoom,target?,easing?} keyframes; repeat a state at a later time to hold. Zoom must be 1..10."},
+    {"type":"spotlight","required":["start","end","rect"],"optional":{"dim":0.65},"description":"Dim outside rectangular target; 0 unchanged, 1 black"},
+    {"type":"blur","required":["start","end","rect"],"optional":{"sigma":8},"description":"Gaussian blur within rectangle, sigma 0.1..50 source pixels; neighboring source pixels contribute at the boundary"}
+  ],
+  "output":{"video":"H.264 in MP4, even dimensions, square pixels","audio":"First audio stream, stereo 48kHz AAC 192kbps; preserve timing and pad gaps with silence; silent sources stay silent","progress":"JSON events on stderr; one final result on stdout","manifest":"Ordered clips with labels, source ranges, actual duration, cumulative timeline_start, hashes, warnings, acceleration paths, and completion status"},
+  "limits":{"request_bytes":4194304,"effects_per_clip":32,"keyframes_per_camera":32,"camera_segments_per_clip":64,"clips_per_job":1000,"sample_frames":12,"review_frames_per_call":240,"review_columns":4,"review_rows":4,"review_thumbnail_width":320,"concurrent_jobs":1},
+  "errors":["invalid_arguments","invalid_json","invalid_request","invalid_source","invalid_media","unsupported_media","media_unavailable","windows_error","decode_failed","encoder_unavailable","encoder_failed","gpu_surface_failed","output_exists","duration_limit","invalid_manifest","busy","output_verification_failed","frame_unavailable","publish_failed","image_failed","install_failed","io_error","cancelled"],
+  "exit_codes":{"0":"Success","2":"Input, codec, installation, or processing error","3":"Renderer busy","130":"Cancelled; current partial clip discarded"},
+  "example_job":{"version":2,"source":"recording.mkv","output_dir":"tutorial-clips","max_duration":720,"clips":[
+    {"id":"opening","label":"Show the working-avatar payoff","range":{"start":1700,"duration":5},"effects":[{"type":"snap_zoom","start":0,"end":5,"zoom":1.2}]},
+    {"id":"character","label":"Character creation: use observed timestamps and targets","range":{"start":60,"duration":8},"effects":[{"type":"camera","keyframes":[{"time":0,"zoom":1},{"time":0.5,"zoom":1.5,"target":{"x":0.5,"y":0.4}},{"time":7,"zoom":1.5,"target":{"x":0.5,"y":0.4}},{"time":8,"zoom":1}]}]}
+  ]},
+  "migration":"Version 1 is rejected before opening media. Use version:2; remove settings.crf and optionally set video_bitrate_kbps. No FFmpeg or FFprobe is needed."
+}

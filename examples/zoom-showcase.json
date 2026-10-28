@@ -1,0 +1,516 @@
+{
+  "version": 2,
+  "source": "../video-clips-for-testing/pngtuber_speedrun.mkv",
+  "output_dir": "../test-output/zoom-showcase",
+  "max_duration": 110,
+  "clips": [
+    {
+      "id": "00-original",
+      "label": "Original: compare against the untreated recording",
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "01-smooth-linear",
+      "label": "Smooth button zoom, hold, and return: linear",
+      "range": {
+        "start": 880,
+        "duration": 8
+      },
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "linear"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02-smooth-ease-in",
+      "label": "Smooth button zoom, hold, and return: ease_in",
+      "range": {
+        "start": 880,
+        "duration": 8
+      },
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "ease_in"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_in"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03-smooth-ease-out",
+      "label": "Smooth button zoom, hold, and return: ease_out",
+      "range": {
+        "start": 880,
+        "duration": 8
+      },
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "ease_out"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_out"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04-smooth-ease-in-out",
+      "label": "Smooth button zoom, hold, and return: ease_in_out",
+      "range": {
+        "start": 880,
+        "duration": 8
+      },
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05-snap-zoom",
+      "label": "Instant 2.4x snap zoom to Done, then snap back",
+      "effects": [
+        {
+          "type": "snap_zoom",
+          "start": 1,
+          "end": 6,
+          "zoom": 2.4,
+          "target": {
+            "x": 0.488,
+            "y": 0.206
+          }
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "06-ken-burns",
+      "label": "Slow combined pan and zoom toward Done",
+      "effects": [
+        {
+          "type": "ken_burns",
+          "start": 0,
+          "end": 8,
+          "from": {
+            "zoom": 1.1,
+            "target": {
+              "x": 0.4,
+              "y": 0.38
+            }
+          },
+          "to": {
+            "zoom": 2.4,
+            "target": {
+              "x": 0.488,
+              "y": 0.206
+            }
+          },
+          "easing": "ease_in_out"
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "07-pan-to-button",
+      "label": "Pan from the character toward Done at constant 2.4x zoom",
+      "effects": [
+        {
+          "type": "pan",
+          "start": 0,
+          "end": 8,
+          "from": {
+            "x": 0.32,
+            "y": 0.45
+          },
+          "to": {
+            "x": 0.488,
+            "y": 0.206
+          },
+          "zoom": 2.4,
+          "easing": "ease_in_out"
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "08-zoom-and-spotlight",
+      "label": "Smooth zoom and dim everything outside the Done button",
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        },
+        {
+          "type": "spotlight",
+          "start": 2.7,
+          "end": 5.5,
+          "rect": {
+            "x": 0.45,
+            "y": 0.175,
+            "width": 0.08,
+            "height": 0.065
+          },
+          "dim": 0.65
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "09-zoom-and-blur",
+      "label": "Smooth zoom with selective blur below the target",
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1,
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        },
+        {
+          "type": "blur",
+          "start": 1,
+          "end": 6,
+          "rect": {
+            "x": 0.15,
+            "y": 0.3,
+            "width": 0.35,
+            "height": 0.56
+          },
+          "sigma": 10
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "10-zoom-out",
+      "label": "Start close to Done, smoothly pull back to the full page",
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              }
+            },
+            {
+              "time": 1.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.488,
+                "y": 0.206
+              },
+              "easing": "ease_in_out"
+            },
+            {
+              "time": 5.5,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    },
+    {
+      "id": "11-edge-button",
+      "label": "Zoom to Apply Slice Grid near the left edge; crop clamps to prevent black borders",
+      "range": {
+        "start": 1385,
+        "duration": 8
+      },
+      "effects": [
+        {
+          "type": "camera",
+          "keyframes": [
+            {
+              "time": 0,
+              "zoom": 1
+            },
+            {
+              "time": 0.7,
+              "zoom": 1
+            },
+            {
+              "time": 2.7,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.06,
+                "y": 0.634
+              }
+            },
+            {
+              "time": 5.5,
+              "zoom": 2.4,
+              "target": {
+                "x": 0.06,
+                "y": 0.634
+              }
+            },
+            {
+              "time": 7.2,
+              "zoom": 1
+            },
+            {
+              "time": 8,
+              "zoom": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "12-subtle-punch-in",
+      "label": "Subtle 15 percent snap zoom for emphasis",
+      "effects": [
+        {
+          "type": "snap_zoom",
+          "start": 1,
+          "end": 6,
+          "zoom": 1.15,
+          "target": {
+            "x": 0.488,
+            "y": 0.206
+          }
+        }
+      ],
+      "range": {
+        "start": 880,
+        "duration": 8
+      }
+    }
+  ]
+}

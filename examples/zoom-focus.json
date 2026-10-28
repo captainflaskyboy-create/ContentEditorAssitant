@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "source": "../video-clips-for-testing/pngtuber_speedrun.mkv",
+  "output": "../test-output/zoom-focus.mp4",
+  "range": {
+    "start": 10,
+    "duration": 6
+  },
+  "effects": [
+    {
+      "type": "camera",
+      "keyframes": [
+        {
+          "time": 0,
+          "zoom": 1
+        },
+        {
+          "time": 0.7,
+          "zoom": 1.7,
+          "target": {
+            "x": 0.48,
+            "y": 0.48
+          }
+        },
+        {
+          "time": 4.8,
+          "zoom": 1.7,
+          "target": {
+            "x": 0.48,
+            "y": 0.48
+          }
+        },
+        {
+          "time": 5.5,
+          "zoom": 1
+        },
+        {
+          "time": 6,
+          "zoom": 1
+        }
+      ]
+    },
+    {
+      "type": "spotlight",
+      "start": 0.7,
+      "end": 4.8,
+      "rect": {
+        "x": 0.4,
+        "y": 0.25,
+        "width": 0.17,
+        "height": 0.47
+      },
+      "dim": 0.5
+    }
+  ]
+}
