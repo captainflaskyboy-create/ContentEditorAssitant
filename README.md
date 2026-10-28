@@ -4,9 +4,28 @@
 
 The calling AI makes the creative decisions. A prompt such as “Make an entertaining tutorial from this recording; choose the shortest satisfying cut, capped at 12 minutes” becomes a review → edit-list → render workflow. ACEA supplies the media operations and predictable JSON results. It does not understand the prompt, generate narration, edit CapCut projects, or assemble the final video.
 
-## Quick start
+## Download and run
+
+Download the standalone **[acea.exe for Windows x64](https://github.com/captainflaskyboy-create/ContentEditorAssitant/releases/latest/download/acea.exe)** from [GitHub Releases](https://github.com/captainflaskyboy-create/ContentEditorAssitant/releases). The executable is the entire runtime; no companion files, Rust installation, FFmpeg, or Python are needed.
+
+Save it in a folder, open PowerShell in that folder, and run:
+
+```powershell
+.\acea.exe --version
+.\acea.exe doctor
+.\acea.exe inspect --source "C:\Videos\recording.mp4"
+.\acea.exe review --source "C:\Videos\recording.mp4" --output-dir ".\recording-review"
+```
+
+Use your own recording path and a new review output directory. Run `.\acea.exe capabilities` for the embedded AI workflow, edit-request examples, supported effects, and command reference. Optional installation is `.\acea.exe install`; open a new terminal afterward to use `acea` from any folder.
+
+Requires Windows 10 22H2 or Windows 11 **x64**, with Windows media components and a graphics driver. Windows N editions may need the Media Feature Pack. The portable executable is unsigned.
+
+## Developer example workflow
 
 Windows 10 22H2 / Windows 11 x64, with Windows media components and a graphics driver. Windows N editions may need the Media Feature Pack. Copy **only `dist/acea.exe`** anywhere you like:
+
+The following examples use the development recording, which is not included in the repository or release. Substitute your own source and timestamps when adapting them.
 
 ```powershell
 .\dist\acea.exe doctor
